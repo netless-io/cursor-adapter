@@ -58,15 +58,30 @@ class CursorComponent extends React.Component<CursorComponentProps, {}> {
         return CursorComponent.descriptions[name].iconUrl;
     }
 
+    private renderAvatar = (roomMember: RoomMember): React.ReactNode => {
+        if (roomMember.payload) {
+            if (roomMember.payload.avatar) {
+                return <img style={{width: 28}} src={roomMember.payload.avatar}/>;
+            } else if (roomMember.payload.id) {
+                return (
+                    <Identicon
+                        size={24}
+                        string={roomMember.payload.id}/>
+                );
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
     public render(): React.ReactNode {
         const {roomMember} = this.props;
         const color = `rgb(${roomMember.memberState.strokeColor[0]}, ${roomMember.memberState.strokeColor[1]}, ${roomMember.memberState.strokeColor[2]})`;
         return <div>
             <div style={{borderColor: color}} className="cursor-box">
-                {roomMember.payload.avatar ? <img style={{width: 28}} src={roomMember.payload.avatar}/> :
-                    <Identicon
-                        size={24}
-                        string={roomMember.payload.id}/>}
+                {this.renderAvatar(roomMember)}
             </div>
             <div style={{backgroundColor: color}}  className="cursor-box-tool">
                 <img src={this.iconUrl(roomMember.memberState.currentApplianceName)}/>

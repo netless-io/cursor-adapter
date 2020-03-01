@@ -1,6 +1,6 @@
 {
   "name": "@netless/cursor-adapter",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "",
   "private": false,
   "main": "dist/index.js",
@@ -16,8 +16,8 @@
   "author": "netless",
   "license": "MIT",
   "dependencies": {
-    "@netless/identicon": "^0.0.1",
-    "md5-typescript": "^1.0.5"
+    "@netless/identicon": "^0.0.2",
+    "white-web-sdk": "^2.6.3"
   },
   "peerDependencies": {
     "react": "^16.8.0",
