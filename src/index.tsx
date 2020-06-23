@@ -6,8 +6,12 @@ import text from "./image/text.svg";
 import eraser from "./image/eraser.svg";
 import ellipse from "./image/ellipse.svg";
 import rectangle from "./image/rectangle.svg";
+import straight from "./image/straight.svg";
+import arrow from "./image/arrow.svg";
+import hand from "./image/hand.svg";
 import "./index.less";
 import Identicon from "@netless/identicon";
+import {BackgroundColorProperty} from "csstype";
 export type CursorComponentProps = {
     roomMember: RoomMember;
 };
@@ -52,6 +56,21 @@ class CursorComponent extends React.Component<CursorComponentProps, {}> {
             hasColor: true,
             hasStroke: true,
         }),
+        straight: Object.freeze({
+            iconUrl: straight,
+            hasColor: true,
+            hasStroke: true,
+        }),
+        arrow: Object.freeze({
+            iconUrl: arrow,
+            hasColor: true,
+            hasStroke: true,
+        }),
+        hand: Object.freeze({
+            iconUrl: hand,
+            hasColor: true,
+            hasStroke: true,
+        }),
     });
 
     private iconUrl = (name: string): string => {
@@ -76,6 +95,18 @@ class CursorComponent extends React.Component<CursorComponentProps, {}> {
         }
     }
 
+    private renderToolImage = (name: string, color: BackgroundColorProperty): React.ReactNode => {
+        if (CursorComponent.descriptions[name]) {
+            return (
+                <div style={{backgroundColor: color}} className="cursor-box-tool">
+                    <img src={this.iconUrl(name)}/>
+                </div>
+            )
+        } else {
+            return null;
+        }
+    }
+
     public render(): React.ReactNode {
         const {roomMember} = this.props;
         const color = `rgb(${roomMember.memberState.strokeColor[0]}, ${roomMember.memberState.strokeColor[1]}, ${roomMember.memberState.strokeColor[2]})`;
@@ -83,9 +114,7 @@ class CursorComponent extends React.Component<CursorComponentProps, {}> {
             <div style={{borderColor: color}} className="cursor-box">
                 {this.renderAvatar(roomMember)}
             </div>
-            <div style={{backgroundColor: color}}  className="cursor-box-tool">
-                <img src={this.iconUrl(roomMember.memberState.currentApplianceName)}/>
-            </div>
+            {this.renderToolImage(roomMember.memberState.currentApplianceName, color)}
         </div>;
 
     }
